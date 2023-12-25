@@ -20,7 +20,7 @@ export async function route(req, res) {
       routeFile = "xml.js";
       break;
     case "formdata":
-      routeFile = "formData.js";
+      routeFile = "formdata.js";
       break;
     default:
       res.writeHead(404, { "Content-Type": "text/plain" });
