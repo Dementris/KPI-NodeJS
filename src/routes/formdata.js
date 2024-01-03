@@ -4,8 +4,20 @@ export function GET(req, res) {
 }
 
 export function POST(req, res) {
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end("Received FormData: " + JSON.stringify(req.body));
+  const body = [];
+  req.on("data", (chunk) => {
+    body.push(chunk);
+  });
+
+  req.on("end", () => {
+    const data = Buffer.concat(body).toString();
+
+    const formData = new FormData();
+    formData.append("receivedData", data);
+
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end(formData.get("receivedData"));
+  });
 }
 
 export function OPTIONS(req, res) {

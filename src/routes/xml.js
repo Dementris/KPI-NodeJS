@@ -6,8 +6,15 @@ export function GET(req, res) {
 }
 
 export function POST(req, res) {
-  res.writeHead(200, { "Content-Type": "application/xml" });
-  res.end(req.body);
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk;
+  });
+
+  req.on("end", () => {
+    res.writeHead(200, { "Content-Type": "application/xml" });
+    res.end(body);
+  });
 }
 
 export function OPTIONS(req, res) {
